@@ -83,7 +83,7 @@ open class SessionManager {
                             return "watchOS"
                         #elseif os(tvOS)
                             return "tvOS"
-                        #elseif os(OSX)
+                        #elseif os(macOS)
                             return "OS X"
                         #elseif os(Linux)
                             return "Linux"
@@ -166,11 +166,10 @@ open class SessionManager {
     public init(
         configuration: URLSessionConfiguration = URLSessionConfiguration.default,
         delegate: SessionDelegate = SessionDelegate(),
-        delegateQueue: OperationQueue? = nil,
         serverTrustPolicyManager: ServerTrustPolicyManager? = nil)
     {
         self.delegate = delegate
-        self.session = URLSession(configuration: configuration, delegate: delegate, delegateQueue: delegateQueue)
+        self.session = URLSession(configuration: configuration, delegate: delegate, delegateQueue: nil)
 
         commonInit(serverTrustPolicyManager: serverTrustPolicyManager)
     }
