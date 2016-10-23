@@ -240,7 +240,7 @@ The `response` handler does NOT evaluate any of the response data. It merely for
 Alamofire.request("https://httpbin.org/get").response { response in
     print("Request: \(response.request)")
     print("Response: \(response.response)")
-    print("Error: \(response.data)")
+    print("Error: \(response.error)")
 
     if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
     	print("Data: \(utf8Text)")
@@ -671,6 +671,8 @@ Alamofire.download("https://httpbin.org/image/png")
 #### Resuming a Download
 
 If a `DownloadRequest` is cancelled or interrupted, the underlying URL session may generate resume data for the active `DownloadRequest`. If this happens, the resume data can be re-used to restart the `DownloadRequest` where it left off. The resume data can be accessed through the download response, then reused when trying to restart the request.
+
+> **IMPORTANT:** On the latest release of all the Apple platforms (iOS 10, macOS 10.12, tvOS 10, watchOS 3), `resumeData` is broken on background URL session configurations. There's an underlying bug in the `resumeData` generation logic where the data is written incorrectly and will always fail to resume the download. For more information about the bug and possible workarounds, please see this Stack Overflow [post](http://stackoverflow.com/a/39347461/1342462).
 
 ```swift
 class ImageRequestor {
